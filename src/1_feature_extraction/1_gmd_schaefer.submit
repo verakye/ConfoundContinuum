@@ -1,0 +1,22 @@
+
+# The environment
+universe = vanilla
+getenv = True
+
+# Resources
+request_cpus = 1
+request_memory = 1.6G
+request_disk = 500
+
+# Executable
+initial_dir = /data/project/motor_ukb/ConfoundContinuum/src/1_feature_extraction
+executable = $(initial_dir)/run_in_venv.sh
+transfer_executable = False
+
+arguments = 1_gmd_schaefer.py --results /data/project/motor_ukb/ConfoundContinuum/results/1_feature_extraction/1_gmd_Schaefer/databases/1_gmd_schaefer_$(subject)_$(session).sqlite --rois 100 200 300 400 500 600 700 800 900 1000 --subid $(subject) --ses $(session)
+
+# Logs
+log = /data/project/motor_ukb/ConfoundContinuum/results/1_feature_extraction/1_gmd_Schaefer/logs/1_gmd_schaefer_$(subject)_$(session).log
+output = /data/project/motor_ukb/ConfoundContinuum/results/1_feature_extraction/1_gmd_Schaefer/logs/1_gmd_schaefer_$(subject)_$(session).out
+error = /data/project/motor_ukb/ConfoundContinuum/results/1_feature_extraction/1_gmd_Schaefer/logs/1_gmd_schaefer_$(subject)_$(session).err
+queue

@@ -1,0 +1,23 @@
+# The environment
+universe = vanilla
+getenv = True
+
+# Resources
+request_cpus = 1
+request_memory = 20G
+request_disk = 500
+
+# Executable
+initial_dir = /data/project/motor_ukb/ConfoundContinuum
+executable = $(initial_dir)/src/1_feature_extraction/run_in_venv.sh
+transfer_executable = False
+
+arguments = $(initial_dir)/src/1_feature_extraction/2_merge_gmd_schaefer_databases.py --rois 400 500 600 700 800 900 1000 --input $(initial_dir)/results/1_feature_extraction/1_gmd_Schaefer/databases --output $(initial_dir)/results/1_feature_extraction/1_gmd_Schaefer --dbname 1_gmd_schaefer_all_subjects.sqlite
+
+
+# Logs
+log = $(initial_dir)/results/1_feature_extraction/1_gmd_Schaefer/db_merge_logs/2_merge_gmd_schaefer_databases.log
+output = $(initial_dir)/results/1_feature_extraction/1_gmd_Schaefer/db_merge_logs/2_merge_gmd_schaefer_databases.out
+error = $(initial_dir)/results/1_feature_extraction/1_gmd_Schaefer/db_merge_logs/2_merge_gmd_schaefer_databases.err
+
+queue

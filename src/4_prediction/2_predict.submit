@@ -1,0 +1,27 @@
+# constant input params
+out_dir_name = predictions_GMVCTFC_CC
+
+# The environment
+universe = vanilla
+getenv = True
+
+# Resources
+request_cpus = 1
+request_memory = 10G
+request_disk = 15G
+
+# Executable
+initial_dir = /data/project/motor_ukb/ConfoundContinuum
+executable = $(initial_dir)/src/4_prediction/run_in_venv.sh
+transfer_executable = False
+
+arguments = $(initial_dir)/src/4_prediction/2_predict.py $(targetname) $(brain_feature) $(confound_feature) $(pipe) $(cnfds) $(out_dir_name)
+
+# Logs
+root_dir = $(initial_dir)/results/4_predictions/$(out_dir_name)
+
+log = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_feature)_$(pipe).$(Cluster).$(Process).log
+output = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_feature)_$(pipe).$(Cluster).$(Process).out
+error = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_feature)_$(pipe).$(Cluster).$(Process).err
+
+queue targetname brain_feature confound_feature pipe cnfds from $(root_dir)/job_options_GMVCTFC_CC.txt

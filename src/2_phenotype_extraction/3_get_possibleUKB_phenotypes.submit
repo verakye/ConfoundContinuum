@@ -1,0 +1,23 @@
+# The environment
+universe = vanilla
+getenv = True
+
+# Resources
+request_cpus = 1
+request_memory = 25G
+request_disk = 25
+
+# Executable
+initial_dir = /data/project/motor_ukb/ConfoundContinuum
+executable = $(initial_dir)/src/2_phenotype_extraction/run_in_venv.sh
+transfer_executable = False
+
+arguments = $(initial_dir)/src/2_phenotype_extraction/3_get_possibleUKB_phenotypes.py
+
+
+# Logs
+log = $(initial_dir)/results/2_phenotype_extraction/logs/3_get_possibleUKB_phenotypes.log
+output = $(initial_dir)/results/2_phenotype_extraction/logs/3_get_possibleUKB_phenotypes.out
+error = $(initial_dir)/results/2_phenotype_extraction/logs/3_get_possibleUKB_phenotypes.err
+
+queue
