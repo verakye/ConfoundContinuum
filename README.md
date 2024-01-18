@@ -18,13 +18,17 @@ The repository follows the following folder structure:
 
 ## Creating the environment:
 
-Create a conda or mamba environment using the provided `requirements.yaml`:
+1. Create a conda or mamba environment using the provided `requirements.yaml`:
 
 ```
 mamba env create -f requirements.yaml 
 ```
-
 (The ukbb_parser must be manually installed from the github branch listed above.)
+
+2. After having set up the enviornment, to make the repository internal library structure available got o `./lib` (directory where the `setup.py`)  is located and run:
+````
+python setup.py develop
+```
 
 ## Code explanations (`/src`)
 In general, follow the respective numbering of subfolders and scripts within subfolders. If a script was executed on the cluster a `.submit` witht the same name as the to be executed python file exists. All code should be run in the root directory of the repository. Initial directories in `.submit` files will need to be adapted to indivual setups. 
