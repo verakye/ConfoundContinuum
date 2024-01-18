@@ -26,7 +26,7 @@ mamba env create -f requirements.yaml
 (The ukbb_parser must be manually installed from the github branch listed above.)
 
 2. After having set up the enviornment, to make the repository internal library structure available got o `./lib` (directory where the `setup.py`)  is located and run:
-````
+```
 python setup.py develop
 ```
 
