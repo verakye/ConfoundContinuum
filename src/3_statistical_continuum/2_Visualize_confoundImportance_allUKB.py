@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from matplotlib import pyplot as plt
 from confoundcontinuum.logging import logger
+import numpy as np
 import pandas as pd
 # from scipy.stats import shapiro
 
@@ -239,7 +240,7 @@ CORR_melt_trgt_sort = CORR_melt.sort_values(
     inplace=False)
 
 # %%
-# Visualize
+# Visualize all
 
 sns.set_style({'font.family': 'Arial'})
 
@@ -314,13 +315,183 @@ ax1.legend_.remove()
 ax2.legend_.remove()
 
 # save figure
-barplots_fname = (
-        plot_dir / 'HGS_GMV_allUKB_correlations_median.pdf')
-plt.savefig(barplots_fname.as_posix(), bbox_inches='tight')
-logger.info(
-    'Visualization of correlations with features and target saved to '
-    f'as {barplots_fname}.')
+# barplots_fname = (
+#         plot_dir / 'HGS_GMV_allUKB_correlations_median.pdf')
+# plt.savefig(barplots_fname.as_posix(), bbox_inches='tight')
+# logger.info(
+#     'Visualization of correlations with features and target saved to '
+#     f'as {barplots_fname}.')
 
 plt.show()
 
 # %%
+# horizontal visualization - HGS
+
+# Plot corr with sign
+correlations_unsorted = correlations.copy()
+correlations = correlations_unsorted.sort_values(
+    by='corr_abs_value', ascending=False, inplace=False).copy()
+correlations_pos = correlations[correlations['corr_value'] > 0].copy()
+correlations_neg = correlations[correlations['corr_value'] < 0].copy()
+
+sns.set_style({'font.family': 'Arial'})
+palette={
+    'body':'#e6194B', 'cognition':'#3cb44b', 'general':'#ffe119',
+    'mental health':'#4363d8', 'heart':'#f58231',
+    'motherhood':'#911eb4', 'alcohol':'#42d4f4',
+    'satisfaction':'#f032e6', 'job':'#fabed4',
+    'sociodemographics':'#469990', 'bone density':'#dcbeff',
+    'respiration':'#9A6324',
+    }
+
+font_size = 18
+font_size_2 = 20
+# without ticklabels
+figsize=(17.7, 7.04)  # 20x8
+fig, axes = plt.subplots(figsize=figsize, nrows=2, ncols=1, sharey=False)
+plt.subplots_adjust(wspace=0, hspace=0.001)
+ax1=axes[0]
+ax2=axes[1]
+
+# grey rectangle
+left, bottom, width, height = (-1, 0, 150, .3)
+rect = mpatches.Rectangle(
+    (left, bottom), width, height,
+    # fill=False,
+    alpha=0.25,
+    facecolor="grey")
+ax1.add_patch(rect)
+left, bottom, width, height = (-1, -.3, 150, .3)
+rect = mpatches.Rectangle(
+    (left, bottom), width, height,
+    # fill=False,
+    alpha=0.25,
+    facecolor="grey")
+ax2.add_patch(rect)
+
+# barplots
+tgrt_h1 = sns.barplot(
+    x=correlations_pos.index, y='corr_value', data=correlations_pos, hue='group',
+    dodge=False, ax=ax1, palette=palette, alpha=1, edgecolor='grey',
+    linewidth=0.5)
+ax1.set_ylim(0, np.max(correlations_pos.corr_value)+.05)
+ax1.xaxis.tick_top()
+tgrt_h2 = sns.barplot(
+    x=correlations_neg.index, y='corr_value', data=correlations_neg, hue='group',
+    dodge=False, ax=ax2, palette=palette, alpha=1, edgecolor='grey',
+    linewidth=0.5)
+ax2.set_ylim(np.min(correlations_neg.corr_value)-.05, 0)
+
+# remove xticklabels for main figure (maybe in supplements)
+ax1.xaxis.set_ticklabels([])
+ax1.xaxis.set_ticks([])
+ax2.xaxis.set_ticklabels([])
+ax2.xaxis.set_ticks([])
+
+# ticks
+# ax1.set_xlabel('Candidate Confounders', fontsize=font_size_2)
+ax1.set_xlabel(None)
+ax2.set_xlabel('Candidate Confounders', fontsize=font_size_2)
+# ax2.xaxis.set_label_position("right")
+ax1.yaxis.set_ticklabels(
+    [f'{i:.1f}' for i in tgrt_h1.get_yticks()], fontsize=font_size_2)
+ax1.set_ylabel(None)
+ax2.yaxis.set_ticklabels(
+    [f'{i:.1f}' for i in tgrt_h2.get_yticks()], fontsize=font_size_2)
+ax2.set_ylabel(None)
+
+# frame
+for side in ['top','right','bottom']:
+    ax1.spines[side].set_visible(False)
+    ax2.spines[side].set_visible(False)
+ax1.spines['left'].set_linewidth(1.5)
+ax2.spines['left'].set_linewidth(1.5)
+
+# grid
+ax1.grid(color='grey', alpha=0.25, linestyle=(5, (25, 20)), linewidth=1.5)
+ax2.grid(color='grey', alpha=0.25, linestyle=(5, (25, 20)), linewidth=1.5)
+
+# annotation lines
+# ax1.axvline(x=0, ymin=-1, ymax=150, color='grey', linewidth=0.5)
+ax1.axhline(y=.3, xmin=.33, xmax=.63, color='black', linewidth=1.5)
+ax1.text(
+    34, 0.5, 'r > 0.3', color='black', ha='right', va='top', rotation=0,
+    transform=ax1.get_xaxis_transform(), fontsize=font_size_2)
+ax2.axhline(y=-.3, xmin=.33, xmax=.63, color='black', linewidth=1.5)
+ax2.text(
+    25, 0.45, 'r < -0.3', color='black', ha='left', va='bottom', rotation=0,
+    transform=ax2.get_xaxis_transform(), fontsize=font_size_2)
+
+# annotations for selected variables
+arrowprops=dict(
+    arrowstyle='-', color='black', linewidth=1, linestyle=(0, (5, 5)))
+ax2.annotate(
+    'Age',xy=(14, correlations.loc["Age-0", "corr_value"]),
+    xytext=(14, -.49), fontsize=font_size, rotation=0,
+    arrowprops=arrowprops, ha='center'
+    )
+ax1.annotate(
+    'Sex',xy=(2, correlations.loc["Sex-0", "corr_value"]),
+    xytext=(2, .8), fontsize=font_size,
+    arrowprops=arrowprops, ha='center'
+    )
+ax1.axvline(
+    x=41,
+    ymin=correlations.loc["mean_Systolic_blood_pressure-0", "corr_value"]+.05,
+    ymax=.62, color='black', linewidth=1, linestyle=(0, (5, 5)))
+ax1.annotate(
+    'Systolic blood pressure',
+    xy=(41, correlations.loc["mean_Systolic_blood_pressure-0", "corr_value"]),
+    xytext=(41, .51), fontsize=font_size,
+    ha='right',
+    )
+ax1.axvline(
+    x=23,
+    ymin=correlations.loc['Length_of_working_week_for_main_job-0', "corr_value"]+.09,
+    ymax=.85, color='black', linewidth=1, linestyle=(0, (5, 5)))
+ax1.annotate(
+    'Length working week main job',
+    xy=(23, correlations.loc['Length_of_working_week_for_main_job-0', "corr_value"]),
+    xytext=(23, .71), fontsize=font_size,
+    ha='center',
+    )
+
+# fig-level manipulations
+# plt.title('HGS (UKBB)', fontsize=24)
+fig.text(
+    .075, .34, 'HGS Correlation', ha='left', fontsize=font_size_2,
+    rotation=90)
+handles, labels = ax1.get_legend_handles_labels()
+# ax.legend(fontsize=font_size, title_fontsize=font_size)
+# handles = ax2.get_legend()
+# with ticklabel figsize
+# leg_loc = (0.255, 0.067)
+# without ticklabel figsize
+leg_loc1 = (0.621, 0.73)
+labels1 = labels[:6]
+handles1 = handles[:6]
+fig.legend(
+    handles1, labels1,
+    loc=leg_loc1, fontsize=font_size_2, title_fontsize=font_size_2,
+    ncol=2,
+    framealpha=1)
+leg_loc2 = (0.524, 0.029)
+labels2 = labels[6:]
+handles2 = handles[6:]
+legend2 = plt.legend(
+    handles2, labels2,
+    loc=leg_loc2, fontsize=font_size_2, title_fontsize=font_size_2,
+    ncol=2,
+    framealpha=1)
+plt.gca().add_artist(legend2)
+ax1.legend_.remove()
+ax2.legend_.remove()
+fig.patch.set_visible(False)
+# plt.tight_layout()
+
+# save figure
+# barplots_fname = (
+#         plot_dir / 'HGS_allUKB_statsdim_annotated.pdf')
+# plt.savefig(barplots_fname.as_posix(), bbox_inches='tight')
+
+plt.show()
