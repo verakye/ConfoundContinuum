@@ -1,5 +1,5 @@
 # constant input params
-out_dir_name = predictions_GMVCTFC_CC
+out_dir_name = predictions_GMVFC_CC
 
 # The environment
 universe = vanilla
@@ -24,4 +24,4 @@ log = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_featu
 output = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_feature)_$(pipe).$(Cluster).$(Process).out
 error = $(root_dir)/logs/2_predict_$(targetname)_$(brain_feature)_$(confound_feature)_$(pipe).$(Cluster).$(Process).err
 
-queue targetname brain_feature confound_feature pipe cnfds from $(root_dir)/job_options_GMVCTFC_CC.txt
+queue targetname brain_feature confound_feature pipe cnfds from $(root_dir)/job_options_GMVFC_CC.txt

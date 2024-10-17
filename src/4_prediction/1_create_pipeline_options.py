@@ -28,26 +28,17 @@ target_options = [
 
 # brain feature options
 brain_feature_options = [
-    "None",
     "all_gmv",
     "FC",
-    "white_thickness",
 ]
 
 # confound feature options
 confound_feature_options = [
     "None",
-    "Sex§Age",
-    "UK_Biobank_assessment_centre-0",
-    "Sex", "Age",
-    "Brain_MRI_sign-off_timestamp-0_decimal",
 ]
 
 # pipeline options
 pipeline_options = [
-    "svr_heuristic_zscore",
-    "linear_svr_L1_heuristic_zscore",
-    "linear_svr_L2_heuristic_zscore",
     "ridgeCV_zscore",
     "svr_zscore",
 ]
@@ -56,9 +47,7 @@ pipeline_options = [
 confound_options = [
     "None",
     "Sex§Age",
-    "UK_Biobank_assessment_centre-0",
     "Sex", "Age",
-    "Brain_MRI_sign-off_timestamp-0_decimal",
 ]
 
 # combine

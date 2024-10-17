@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 # parameters
-out_name = 'summary-GMVCTFC_CC.csv'
-out_dir_name = 'predictions_GMVCTFC_CC'
+out_name = 'summary-GMVFC_CC.csv'
+out_dir_name = 'predictions_GMVFC_CC'
 
 # directories
 # RUN IN ROOT DIRECTORY OF PROJECT!

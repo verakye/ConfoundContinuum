@@ -38,9 +38,8 @@ In general, follow the respective numbering of subfolders and scripts within sub
         1. generate submit and dag files e.g. `python ./src/1_feature_extraction/1_generate_submit_dag_gmd_Schaefer.py `
         2. submit dag: `condor_submit_dag -import_env ./src/1_feature_extraction/1_gmd_schaefer.dag` (and respectively for other atlases)
         3. merge single subject databases: e.g. `condor_submit ./src/1_feature_extraction/4_merge_gmd_SUIT_databases.submit` (and respectively for other atlases) 
-    - CT: parse surface features from the UKB: `python ./src/1_feature_extraction/7_parse_surface_freesurfer_ukbb.py`
     - FC: data from costum code from different project -> put FC.csv features in `./data/functional`. 
-    - Convert .sqlite feature databases to .jay format for quicker IO: `python ./src/1_feature_extraction/8_convert_features2jay.py`
+    - Convert .sqlite feature databases to .jay format for quicker IO: `python ./src/1_feature_extraction/7_convert_features2jay.py`
 2. phenotyoe extraction (`./src/2_phenotype_extraction/...`)
     - get HGS target phenotypes and extract imaging subjects: either run `1_get_motor_phenotypes.py` or submit to cluster with .submit
     - clean the HGS target phenotypes: `2_clean_motor_phenotypes_IMG.py`

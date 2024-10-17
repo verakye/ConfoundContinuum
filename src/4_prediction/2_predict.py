@@ -39,15 +39,7 @@ brain_feature = sys.argv[2]
 confound_feature = sys.argv[3].split('§')
 pipe = sys.argv[4]
 cnfds = sys.argv[5].split('§')
-out_dir_name = sys.argv[6]  # e.g. 'predictions_GMVCTFC_CC'
-
-# TODO remove - for debugging only
-# target_name = 'HGS_mean_left_right'
-# brain_feature = 'None'
-# confound_feature = "Sex§Age".split('§')
-# pipe = "linear_svr_L2_heuristic_zscore"
-# cnfds = "None".split('§')
-# out_dir_name = 'predictions_GMVCTFC_CC'
+out_dir_name = sys.argv[6]  # e.g. 'predictions_GMVFC_CC'
 
 # None inputs
 # brain_features
