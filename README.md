@@ -1,7 +1,7 @@
-# A framework for confounder considerations in AI-driven precision medicine
+# Confounder Control in Biomedicine Necessitates Conceptual Considerations Beyond Statistical Evaluations
 
 ## General information
-This repository contains all the code needed to run the analyses for the paper "A framework for confounder considerations in AI-driven precision medicine" (https://www.medrxiv.org/content/10.1101/2024.02.02.24302198v1.full).
+This repository contains all the code needed to run the analyses for the paper "Confounder Control in Biomedicine Necessitates Conceptual Considerations Beyond Statistical Evaluations" (https://www.medrxiv.org/content/10.1101/2024.02.02.24302198v1.full).
 
 ### Data
 This research has been conducted using data from UK Biobank, a major biomedical database (www.ukbiobank.ac.uk). Behavioural variables are derived from the UKB using the ukbb_parser in a modified version to be able to parse .tsv files (https://github.com/kaurao/ukbb_parser/tree/filetype_unknown). Most neuroimaging data are consumed using datalad (https://www.datalad.org). The data can not be made available here as it has constrained access. 
